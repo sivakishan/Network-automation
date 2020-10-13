@@ -105,3 +105,15 @@ Host devC
     IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
     User ubuntu
     ProxyJump  bastion
+
+
+===================================================================
+Clean up Nginx sevrers
+===================================================================
+
+sudo apt remove --purge nginx -y
+sudo apt remove --purge apache2 -y
+sudo apt-get remove --purge php* -y
+
+
+
