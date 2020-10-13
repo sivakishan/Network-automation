@@ -5,8 +5,7 @@
     - common
     - haproxy
 - hosts: webservers
-  bcome: yes
+  become: yes
   roles:
     - common
     - nginx
-    
