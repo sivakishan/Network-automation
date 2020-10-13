@@ -6,7 +6,6 @@
 - name: inatall php
   apt:
     pkg:
-    - php
     - php-fpm
 - name: copy index.php
   copy:
