@@ -115,5 +115,53 @@ sudo apt remove --purge nginx -y
 sudo apt remove --purge apache2 -y
 sudo apt-get remove --purge php* -y
 
+===================================================================
+BUG FOUND IN CODE
+===================================================================
 
+example nginx config did not work. Following nginx config worked.
+
+
+OLD
+
+server {
+listen 80 default_server;
+listen [::]:80 default_server;
+root /var/www/html;
+index index.php index.html index.htm index.nginx-debian.html;
+server_name _;
+location / {
+try_files \$uri \$uri/ =404;
+}
+location ~ \.php$ {
+include snippets/fastcgi-php.conf;
+fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+}
+
+NEW
+
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/html;
+    index index.php index.html index.htm index.nginx-debian.html;
+    server_name _;
+    
+    location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    }
+
+}
+
+Also install package with name php install apache2 as it is a dependency. 
+
+So only installed php7.4-fpm package.
+
+===================================================================
 
