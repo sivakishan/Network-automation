@@ -1,0 +1,105 @@
+# Create Git Repo
+
+git init
+git config user.email "sibb19@student.bth.se"
+git config user.name "Sivakishan Atal BIhari Beesa"
+
+
+# Create SSH Key
+
+mkdir my-ssh-key
+cd my-ssh-key
+
+ssh-keygen -f cloud-ssh-key
+
+This will create 2 files
+
+kishan@desktop:/home/kishan/ansible-project/my-ssh-key$ ll
+total 16
+drwxr-xr-x 2 kishan kishan 4096 Oct 13 09:20 .
+drwxr-xr-x 5 kishan kishan 4096 Oct 13 09:19 ..
+-rw------- 1 kishan kishan 1675 Oct 13 09:20 cloud-ssh-key
+-rw-r--r-- 1 kishan kishan  393 Oct 13 09:20 cloud-ssh-key.pub
+kishan@desktop:/home/kishan/ansible-project/my-ssh-key$ 
+
+copy the content of file
+
+cloud-ssh-key.pub
+
+Paste it in
+
+https://admin.citycloud.com/compute/keypairs
+
+click create. See screenshot 
+
+add-ssh-key.png
+
+
+===================================================================
+Edit /etc/hosts
+===================================================================
+
+in this file, list IP of each server, then a space, afer that name of the server.
+
+For example
+
+31.132.58.7 devhaproxy
+31.132.58.187 bastion
+10.10.10.50 devA
+
+===================================================================
+Bastion setup
+===================================================================
+
+On this server, we need SSH key for all other server preset.
+
+On Bastion server, do following
+
+vi /home/ubuntu/.ssh/id_rsa
+
+In this put your privat key. That is content of file 
+
+my-ssh-key/cloud-ssh-key
+
+set permisison for key file
+
+chmod 600 /home/ubuntu/.ssh/id_rsa
+
+On this server also, edit /etc/hosts file, add exactly what you have put in your local /etc/hosts file.
+
+
+===================================================================
+SSH Jump Host config
+===================================================================
+
+Currently you can't access server devA locally. Only Bastion host can connect to it.
+
+To be able to install nginx using ansible, you need to connect to Nginx servers (devA, devB, devC).
+
+This is done using SSH client config JumpHost.
+
+To do this, edit file on your local computer, where you run ansible-playbook.
+
+code ~/.ssh/config
+
+Add
+
+
+Host bastion
+    User ubuntu
+    IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
+
+Host devA
+    IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
+    User ubuntu
+    ProxyJump  bastion
+
+Host devB
+    IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
+    User ubuntu
+    ProxyJump  bastion
+
+Host devC
+    IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
+    User ubuntu
+    ProxyJump  bastion
