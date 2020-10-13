@@ -4,3 +4,9 @@
   roles:
     - common
     - haproxy
+- hosts: webservers
+  bcome: yes
+  roles:
+    - common
+    - nginx
+    
