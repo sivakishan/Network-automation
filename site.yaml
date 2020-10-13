@@ -9,3 +9,6 @@
   roles:
     - common
     - nginx
+- hosts: haproxy
+  roles:
+  - haproxy-test
