@@ -3,10 +3,9 @@
   apt:
     update_cache: yes
     cache_valid_time: 3600
-- name: install utils
+- name: install some basic tools
   apt:
     pkg:
     - net-tools
     - curl
     - nmap
-    
