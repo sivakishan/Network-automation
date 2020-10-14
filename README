@@ -44,10 +44,12 @@ in this file, list IP of each server, then a space, afer that name of the server
 For example
 
 31.132.58.7 devhaproxy
-31.132.58.187 bastion
+31.132.58.187 bastionET2598
 10.10.10.78 devA
 10.10.10.178 devB
 10.10.10.118 devC
+
+You need this added in your local computer that run ansible-playbook and bastionET2598 server.
 
 ===================================================================
 Bastion setup
@@ -87,24 +89,28 @@ code ~/.ssh/config
 Add
 
 
-Host bastion
+Host bastionET2598
+    User ubuntu
+    IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
+
+Host devhaproxy
     User ubuntu
     IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
 
 Host devA
     IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
     User ubuntu
-    ProxyJump  bastion
+    ProxyJump  bastionET2598
 
 Host devB
     IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
     User ubuntu
-    ProxyJump  bastion
+    ProxyJump  bastionET2598
 
 Host devC
     IdentityFile /home/kishan/ansible-project/my-ssh-key/cloud-ssh-key
     User ubuntu
-    ProxyJump  bastion
+    ProxyJump  bastionET2598
 
 
 ===================================================================
