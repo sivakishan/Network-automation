@@ -1,19 +1,24 @@
 ---
+# This task run on haproxy server.
+# So sending rquest to itself can be done using 
+# http://localhost
+# We can use devhaproxy, in that case, need to edit
+# /etc/hosts in haproxy server
   - name: HAProxy Request 1
     uri:
-      url: http://localhost/index.php
+      url: http://localhost/
       return_content: yes
     register: html_body
   - debug: msg='{{ html_body.content }}'
   - name: HAProxy Request 2
     uri:
-      url: http://localhost/index.php
+      url: http://localhost/
       return_content: yes
     register: html_body
   - debug: msg='{{ html_body.content }}'
   - name: HAProxy Request 3
     uri:
-      url: http://localhost/index.php
+      url: http://localhost/
       return_content: yes
     register: html_body
   - debug: msg='{{ html_body.content }}'
