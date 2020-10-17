@@ -1,14 +1,12 @@
 ---
-- hosts: haproxy
-  become: yes
-  roles:
-    - common
-    - haproxy
 - hosts: webservers
   become: yes
   roles:
-    - common
     - nginx
+- hosts: all
+  gather_facts: yes
 - hosts: haproxy
+  become: yes
   roles:
-  - haproxy-test
+    - haproxy
+    - haproxy-test

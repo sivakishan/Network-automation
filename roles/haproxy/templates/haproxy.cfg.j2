@@ -38,6 +38,6 @@ frontend public
 	default_backend nginx_web_servers
 
 backend nginx_web_servers
-	server devA 10.10.10.78:80
-	server devB 10.10.10.178:80
-	server devC 10.10.10.118:80
+{% for host in groups['webservers'] %}
+    server  {{ host }} {{ hostvars[host]['ansible_env'].SSH_CONNECTION.split(' ')[2] }}:80
+{% endfor %}

@@ -7,10 +7,10 @@
   apt:
     name: haproxy
     state: present
-- name: upload haproxy.cfg
-  copy:
-    src: "{{ role_path }}/files/haproxy.cfg"
+- name: configure haproxy
+  template:
     dest: /etc/haproxy/haproxy.cfg
+    src: templates/haproxy.cfg.j2
 - name: restart haproxy
   systemd:
     name: haproxy
