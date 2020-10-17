@@ -114,14 +114,6 @@ Host devC
 
 
 ===================================================================
-Clean up Nginx sevrers
-===================================================================
-
-sudo apt remove --purge nginx -y
-sudo apt remove --purge apache2 -y
-sudo apt-get remove --purge php* -y
-
-===================================================================
 BUG FOUND IN CODE
 ===================================================================
 
@@ -155,7 +147,7 @@ server {
     server_name _;
     
     location / {
-        try_files $uri $uri/ /index.php?$args;
+        try_files $uri $uri/ =404;
     }
 
     location ~ \.php$ {
